@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Youtube Downloader</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/style.css') }}"
+		/>
+		<script
+			src="{{ url_for('static', filename='js/script.js') }}"
+			defer
+		></script>
+	</head>
+	<body>
+		<nav class="nav-bar">
+			<div class="logo">
+				<a href="/">Youtube Downloader</a>
+			</div>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="#">Sobre</a></li>
+			</ul>
+		</nav>
+		<main>
+			{% set mensagens = get_flashed_messages() %} {% if mensagens %}
+			<div class="mensagens">
+				{% for mensagem in mensagens %}
+				<span>{{ mensagem }}</span>
+				<span class="close-msg">x</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+			<div class="pesquisar-wrapper">
+				<h1>Baixe Aqui | Seus Vídeos e Músicas Gratuitamente</h1>
+				<form action="/pesquisar" method="POST" class="pesquisar-form">
+					<input
+						type="text"
+						placeholder="Link do vídeo"
+						name="link"
+						required
+					/>
+					<button>Pesquisar</button>
+				</form>
+			</div>
+			{% if titulo %}
+			<hr />
+			<div class="video">
+				<img src="{{ img }}" alt="" />
+				<span>{{ titulo }}</span>
+				<div class="formatos">
+					<button class="formato" onclick="activeFormat(1)">
+						Música / MP3
+					</button>
+					<button class="formato" onclick="activeFormat(2)">
+						Vídeo / MP4
+					</button>
+				</div>
+				<form action="/baixar" method="POST">
+					<input
+						type="hidden"
+						name="formato"
+						class="formato-hidden"
+					/>
+					<button>Baixar</button>
+				</form>
+			</div>
+			{% endif %}
+		</main>
+		<footer>
+			<div class="social-networks"></div>
+			<p class="copyright">
+				&copy; Youtube Downloader - Todos os direiros reservados.
+			</p>
+		</footer>
+	</body>
+</html>
